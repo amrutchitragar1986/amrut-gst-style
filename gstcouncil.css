@@ -467,3 +467,198 @@ footer{
     content: none;
   }
 }
+ /* Author & Disclaimer — pro meta layout */
+.author-disclaimer{
+  background: #f9fbff;
+  border-left: 4px solid #0b5394;
+  padding: 16px 20px;
+  margin: 24px 0;
+  border-radius: 8px;
+  color: #1f2937;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;         /* matches .intro */
+  line-height: 1.7;        /* same rhythm as .intro */
+}
+
+.author-disclaimer .meta-list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+}
+.author-disclaimer .meta-list li{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 1.05rem;         /* same as .intro */
+  line-height: 1.7;
+  color: #1f2937;
+}
+/* dot separator between items */
+.author-disclaimer .meta-list li + li{
+  position: relative;
+  padding-left: 14px;
+}
+.author-disclaimer .meta-list li + li::before{
+  content: "|";
+  position: absolute;
+  left: 0;
+  color: #94a3b8; /* slate-300 */
+}
+
+.author-disclaimer .label{
+  color: #0b5394;
+  font-weight: 700;
+}
+
+.author-disclaimer .meta-note{
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  color: #475569; /* slate-600 */
+  line-height: 1.6;
+}
+.author-disclaimer .meta-note a{
+  color: #0b5394;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(11,83,148,.4);
+}
+.author-disclaimer .meta-note a:hover{
+  text-decoration: underline;
+}
+
+/* Mobile: stack items; hide the dot separator */
+@media (max-width: 640px){
+  .author-disclaimer .meta-list{
+    flex-direction: column;
+    gap: 4px;
+  }
+  .author-disclaimer .meta-list li + li{
+    padding-left: 0;
+  }
+  .author-disclaimer .meta-list li + li::before{
+    content: none;
+  }
+}
+
+  
+  /* Kill bullets in Section TOC dropdown */
+.section-toc-dropdown ul,
+.section-toc-dropdown ul li {
+  list-style: none !important;
+  margin: 0;
+  padding: 0;
+}
+
+.section-toc-dropdown ul li::before,
+.section-toc-dropdown ul li::marker {
+  content: none !important;
+}
+
+ /* ===============================
+   TOC Links → Pill Button Style
+   =============================== */
+
+/* Kill bullets */
+.toc ul,
+.toc li {
+  list-style: none !important;
+  margin: 0;
+  padding: 0;
+}
+.toc li::before,
+.toc li::marker {
+  content: none !important;
+}
+
+/* Style TOC links as pills */
+.toc a {
+  display: block;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0b5394;
+  text-decoration: none;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.toc a:hover {
+  background: #e0f2fe;
+  color: #0c4a6e;
+  text-decoration: underline;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   Force TOC columns on mobile
+   ========================= */
+
+/* Mobile: 3 per row */
+@media (max-width: 768px) {
+  .toc ul {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+  .toc a {
+    font-size: 0.9rem;
+    padding: 8px 6px;
+  }
+}
+
+/* Extra small: keep 3 per row too */
+@media (max-width: 480px) {
+  .toc ul {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .toc a {
+    font-size: 0.85rem;
+    padding: 7px 5px;
+  }
+}
+  
+  /* =========================
+   Section TOC Dropdown → Always 4 per row (with min width)
+   ========================= */
+.section-toc-dropdown ul {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important; /* lock to 4 columns */
+  gap: 8px 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section-toc-dropdown li {
+  margin: 0;
+}
+
+.section-toc-dropdown a {
+  display: block;
+  text-align: center;
+  padding: 8px 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0b5394;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  min-width: 70px;          /* 👈 ensures pill never too narrow */
+}
+
+.section-toc-dropdown a:hover {
+  background: #e0f2fe;
+  color: #09427a;
+  text-decoration: underline;
+}
+
+  
