@@ -397,3 +397,73 @@ footer{
   .footer-links{ gap: 15px; }
 }
 
+/* Author/Disclaimer — pro meta layout */
+.author-disclaimer{
+  background: #f9fbff;                 /* calmer than green */
+  border-left: 4px solid #0b5394;
+  padding: 14px 16px;
+  margin: 20px 0 24px;
+  border-radius: 8px;
+  color: #1f2937;
+}
+
+.author-disclaimer .meta-list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 6px;
+}
+.author-disclaimer .meta-list li{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: #1f2937;
+}
+/* dot separator between items */
+.author-disclaimer .meta-list li + li{
+  position: relative;
+  padding-left: 14px;
+}
+.author-disclaimer .meta-list li + li::before{
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #94a3b8; /* slate-300 */
+}
+
+.author-disclaimer .label{
+  color: #0b5394;
+  font-weight: 700;
+}
+
+.author-disclaimer .meta-note{
+  margin: 2px 0 0;
+  font-size: 0.92rem;
+  color: #475569; /* slate-600 */
+}
+.author-disclaimer .meta-note a{
+  color: #0b5394;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(11,83,148,.4);
+}
+.author-disclaimer .meta-note a:hover{
+  text-decoration: underline;
+}
+
+/* Mobile: stack items; hide the dot separator */
+@media (max-width: 640px){
+  .author-disclaimer .meta-list{
+    flex-direction: column;
+    gap: 4px;
+  }
+  .author-disclaimer .meta-list li + li{
+    padding-left: 0;
+  }
+  .author-disclaimer .meta-list li + li::before{
+    content: none;
+  }
+}
