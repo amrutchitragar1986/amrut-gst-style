@@ -1,0 +1,399 @@
+/* ======================================================
+   GST Council — Mini Article Styles (Consolidated)
+   - Duplicate rules removed
+   - Consistent spacing, colors, and mobile behavior
+   - Intro uses .intro (not .tldr) — .tldr kept for legacy
+   ====================================================== */
+
+/* ---------------------------
+   0) Base reset & container
+   --------------------------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root{
+  --bg: #f8fafc;
+  --text: #1f2937;
+  --muted: #475569;
+  --muted-2: #6b7785;
+  --brand: #0b5394;
+  --link: #1a73e8;
+  --link-hover: #0c4a6e;
+  --border: #e5e7eb;
+  --card: #ffffff;
+  --card-soft: #f9fafb;
+  --shadow-s: 0 2px 8px rgba(0,0,0,0.05);
+  --shadow-m: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-l: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+body{
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.7;
+  font-size: 18px;
+  padding: 20px 20px 90px;  /* bottom space for footer */
+  min-height: 100vh;
+  position: relative;
+}
+
+.container { max-width: 1000px; margin: 0 auto; }
+
+/* Post header */
+.container > header{
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--brand) 0%, #1a73e8 100%);
+  border-radius: 16px;
+  color: #fff;
+  box-shadow: var(--shadow-m);
+}
+h1{ font-size: 2.5rem; margin-bottom: 10px; }
+.subtitle{ font-size: 1.2rem; opacity: .9; }
+
+/* ---------------------------
+   1) Main TOC (grid index)
+   --------------------------- */
+.toc{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: var(--shadow-s);
+  position: relative;
+}
+.toc h3{ margin: 0 0 15px; font-size: 1.4rem; color: var(--brand); }
+.toc ul{
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .8rem 1.5rem;
+}
+.toc a{
+  color: var(--link);
+  text-decoration: none;
+  font-weight: 700;
+  display: block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: .2s ease;
+}
+.toc a:hover{ text-decoration: underline; background: #f3f6fb; }
+
+/* Mobile: keep 4 per row but optimize tap targets */
+@media (max-width: 768px){
+  .toc ul{
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px 12px;
+  }
+  .toc a{
+    text-align: center;
+    padding: 10px 6px;
+    font-weight: 600;
+    font-size: .95rem;
+  }
+}
+
+/* ---------------------------
+   2) Meeting blocks (accordion)
+   --------------------------- */
+details.meet{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fafafa;
+  margin: 20px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-s);
+  transition: .3s ease;
+  position: relative;
+}
+details.meet[open]{
+  background: var(--card);
+  box-shadow: var(--shadow-l);
+  margin-bottom: 30px;
+}
+
+/* Summary header */
+details.meet > summary{
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 18px 50px 18px 20px;
+  font-weight: 900;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  transition: background-color .2s ease;
+  position: relative;
+  background: var(--card-soft);
+  border-left: 5px solid var(--brand);
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+details.meet > summary:hover{ background: #f0f7ff; }
+details.meet > summary::-webkit-details-marker{ display: none; }
+
+/* Chevron */
+details.meet > summary .chev{
+  width: 22px; height: 22px; flex: 0 0 22px;
+  transition: transform .3s ease;
+  background: no-repeat center/contain url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>\
+<path d='M6 9l6 6 6-6' fill='none' stroke='%2322272A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>\
+</svg>");
+}
+details.meet[open] > summary .chev{ transform: rotate(180deg); }
+
+/* Body */
+.body{
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 20px;
+  position: relative;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Meta line (date · city) */
+.meta{
+  margin: 0 0 15px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+/* Intro paragraph (preferred) */
+.intro{
+  font-size: 17px;
+  line-height: 1.75;
+  margin: 0 0 18px;
+  color: #2a2a2a;
+}
+
+/* TL;DR (legacy) — prefer .intro; keep for backwards compatibility */
+.tldr{
+  margin: 15px 0;
+  font-weight: 700;
+  color: var(--brand);
+  padding: 12px 14px;
+  background:#e8f2ff;
+  border-left: 4px solid #2b6cb0;
+  border-radius: 8px;
+}
+
+/* Bullets, sub-bullets, key callout */
+.points{ margin: 15px 0 0 1.2rem; padding: 0; }
+.points li{ margin: 12px 0; line-height: 1.6; }
+.sub{
+  margin: .5rem 0 0 1.2rem;
+  color: #374151;
+  font-size: .95rem;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-radius: 6px;
+}
+.key{
+  margin: 20px 0 10px;
+  padding: 15px;
+  background: #f0fdf4;
+  border-left: 4px solid #16a34a;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+/* ---------------------------
+   3) Section TOC (button + dropdown)
+   --------------------------- */
+.section-toc-btn{
+  position: absolute;
+  top: 20px; right: 20px;
+  background: #f1f5f9;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: .2s ease;
+  z-index: 10;
+}
+.section-toc-btn:hover{ background: #e5e7eb; transform: scale(1.05); }
+.section-toc-btn svg{ width: 20px; height: 20px; color: #475569; }
+
+/* Dropdown (desktop: 4-column grid; mobile: stacked) */
+.section-toc-dropdown{
+  position: absolute;
+  top: 56px; right: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-m);
+  padding: 12px;
+  z-index: 20;
+  display: none;              /* toggle by adding .show via your own script/CMS */
+  min-width: 260px;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+.section-toc-dropdown.show{ display: block; }
+
+.section-toc-dropdown ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px 12px;
+}
+.section-toc-dropdown li{ margin: 0; }
+.section-toc-dropdown a{
+  display: block;
+  text-align: center;
+  padding: 8px 6px;
+  font-size: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fafafa;
+  text-decoration: none;
+  color: #1d4ed8;
+  transition: background .2s ease;
+}
+.section-toc-dropdown a:hover{
+  background: #e0f2fe;
+  color: var(--brand);
+  text-decoration: underline;
+}
+
+/* Mobile dropdown: full width, stacked, scrollable if long */
+@media (max-width: 768px){
+  details.meet{ overflow: visible; } /* let dropdown overflow cleanly */
+  .section-toc-btn{ top: 15px; right: 15px; z-index: 2001; }
+  .section-toc-dropdown{
+    right: 15px; left: 16px; top: 56px;
+    max-height: 48vh; overflow: auto; border-radius: 10px; z-index: 2000;
+  }
+  .section-toc-dropdown ul{
+    display: block;  /* stack vertically on mobile for easy tapping */
+  }
+  .section-toc-dropdown a{
+    text-align: left;
+    width: 100%;
+    padding: 10px 14px;
+    font-size: .95rem;
+    background: #fff;
+  }
+}
+
+/* ---------------------------
+   4) PDFs row (Agenda/Minutes)
+   --------------------------- */
+.pdf-row{
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+  margin: 20px 0 10px;
+}
+.pdf{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font: 700 .95em/1 system-ui, sans-serif;
+  color: var(--link);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .6rem .8rem;
+  background: #fff;
+  transition: .2s ease;
+}
+.pdf:hover{
+  background: #f3f6fb;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-s);
+}
+.pdf .host{
+  font-weight: 700;
+  font-size: .82em;
+  color: #64748b;
+  border-left: 1px solid var(--border);
+  padding-left: .6rem;
+  margin-left: .4rem;
+}
+
+/* ---------------------------
+   5) Content callouts / FAQ
+   --------------------------- */
+.highlight-box{
+  background:#fff7e6;
+  border-left:4px solid #d97706;
+  padding:12px 14px;
+  border-radius:8px;
+  margin:12px 0;
+}
+.practice-tip{
+  background:#f0f9ff;
+  border:1px solid #bee3f8;
+  padding:10px 12px;
+  border-radius:8px;
+  margin:8px 0;
+}
+.continuity{
+  background:#f8fafc;
+  border-left:4px solid #64748b;
+  padding:10px 12px;
+  border-radius:8px;
+}
+
+/* FAQ box (shared across site) */
+.faq-box{
+  background-color: #f9fbff;
+  border-left: 4px solid var(--brand);
+  padding: 16px 20px;
+  margin: 28px 0;
+  border-radius: 6px;
+  font-family: 'Segoe UI', sans-serif;
+}
+.faq-box h4{
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: var(--brand);
+}
+.faq-box ul{ list-style: none; padding-left: 0; margin: 0; }
+.faq-box li{ margin-bottom: 10px; line-height: 1.65; }
+
+/* ---------------------------
+   6) Footer
+   --------------------------- */
+footer{
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  height: 90px;
+  display: flex; flex-direction: column; justify-content: center;
+  box-shadow: 0 -4px 12px rgba(0,0,0,.1);
+  z-index: 100;
+}
+.footer-content{
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-links{ display: flex; gap: 20px; }
+.footer-links a{ color: #fff; text-decoration: none; transition: opacity .2s; }
+.footer-links a:hover{ opacity: .8; text-decoration: underline; }
+
+@media (max-width: 768px){
+  body{ padding: 15px 15px 100px; }
+  .container > header{ padding: 15px; }
+  h1{ font-size: 2rem; }
+  .footer-content{ flex-direction: column; gap: 10px; }
+  .footer-links{ gap: 15px; }
+}
+
