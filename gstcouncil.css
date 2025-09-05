@@ -169,7 +169,8 @@ details.meet[open] > summary .chev{ transform: rotate(180deg); }
 
 /* Intro paragraph (preferred) */
 .intro{
-  font-size: 17px;
+   font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: 18px;
   line-height: 1.75;
   margin: 0 0 18px;
   color: #2a2a2a;
