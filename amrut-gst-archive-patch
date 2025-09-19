@@ -1,0 +1,451 @@
+/* =========================================================
+   Amrut GST Archive — Clean CSS (Scoped + De-duplicated)
+   ========================================================= */
+
+/* ========== 1) Base Reset & Theme Defaults ========== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #1e293b;
+  background: #f8fafc;
+}
+
+/* Site container */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ========== 2) Top Page Banner (ONLY) ========== */
+/* Apply gradient ONLY to the first header directly under <body>. */
+body > header:first-of-type {
+  background: linear-gradient(135deg, #1a4b8c, #2b6cb0);
+  color: #fff;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,.1);
+}
+body > header:first-of-type h1 { font-size: 2.4rem; margin-bottom: .5rem; }
+body > header:first-of-type p  { max-width: 780px; opacity: .95; }
+body > header:first-of-type a  { color: #cce9ff; text-decoration: underline; }
+body > header:first-of-type a:hover { text-decoration: none; }
+
+/* Neutralize ANY <header> that appears inside the article so it never picks the gradient. */
+main header:not(.gst-hero),
+.entry-content header:not(.gst-hero),
+.post-body header:not(.gst-hero),
+.post-content header:not(.gst-hero),
+article header:not(.gst-hero) {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 0 1rem !important;
+  box-shadow: none !important;
+}
+main header:not(.gst-hero) a,
+.entry-content header:not(.gst-hero) a,
+.post-body header:not(.gst-hero) a,
+.post-content header:not(.gst-hero) a,
+article header:not(.gst-hero) a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* ========== 3) TOC / Meeting Cards ========== */
+.toc-container { margin-bottom: 2rem; }
+.toc-container h2 { font-size: 1.6rem; color: #133a6b; margin-bottom: 1rem; }
+
+.toc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.toc-item {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+  padding: 1rem 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  transition: transform .2s, box-shadow .2s;
+}
+.toc-item h3 { color: #184a8b; font-size: 1.05rem; margin-bottom: .35rem; }
+.toc-item p { color: #475569; font-size: .9rem; }
+.toc-item:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0,0,0,.08); }
+
+/* Mobile: compact 3-up cards for Meeting Archive */
+@media (max-width: 640px) {
+  .toc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .toc-item {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 8px 6px; border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  }
+  .toc-item h3 { font-size: 0.86rem; line-height: 1.2; margin-bottom: 4px; white-space: normal; word-break: break-word; }
+  .toc-item p  { font-size: 0.72rem; line-height: 1.25; color: #5b6472; white-space: normal; margin: 0; }
+}
+
+/* ========== 4) Meeting Block ========== */
+.meeting {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+  padding: 1.5rem; margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  position: relative; display: none;
+}
+.meeting[aria-hidden="false"] { display: block; }
+
+.meeting-header {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+  padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; margin-bottom: 1rem;
+}
+.meeting-title { color: #2b6cb0; font-size: 1.6rem; line-height: 1.25; }
+.meeting-date { color: #64748b; margin-top: .35rem; }
+
+.close-meeting {
+  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+  border-radius: 50%; border: none; background: #f56565; color: #fff;
+  font-size: 1.1rem; cursor: pointer;
+}
+.close-meeting:hover { background: #e53e3e; }
+
+.new-window-btn {
+  background: #e6f7ff; color: #184a8b; border: 1px solid #91d5ff;
+  padding: .5rem .8rem; border-radius: 8px; font-size: .9rem; cursor: pointer;
+}
+.new-window-btn:hover { background: #cfeeff; }
+
+/* Meeting nav */
+.meeting-nav {
+  position: sticky; top: 0; z-index: 10; background: #fff;
+  padding: .8rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  margin-bottom: 1rem; min-height: 56px;
+}
+.meeting-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.meeting-link {
+  display: block; text-align: center; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; color: #334155; padding: .5rem .6rem; font-size: .9rem;
+}
+.meeting-link:hover { background: #e6edf6; color: #1a4b8c; }
+
+.nav-toggle {
+  background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+  padding: .6rem .9rem; cursor: pointer; font-size: .95rem; color: #1f2937;
+}
+.meeting-links-panel {
+  margin-top: .7rem; border: 1px solid #e2e8f0; border-radius: 10px; padding: .8rem; box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+
+/* ========== 5) Sections, Tables, Typography inside Meeting ========== */
+.section { margin: 1.25rem 0; }
+.section h3 {
+  color: #2b6cb0; margin-bottom: .6rem; padding-bottom: .4rem; border-bottom: 1px solid #e2e8f0;
+}
+.section p { margin-bottom: .85rem; }
+
+table { width: 100%; border-collapse: collapse; margin: .75rem 0 1.25rem; font-size: .95rem; }
+th, td { padding: .7rem; border: 1px solid #e2e8f0; text-align: left; }
+th { background: #f1f5f9; font-weight: 600; }
+
+/* ========== 6) Back-to-top ========== */
+.back-to-top {
+  position: fixed; bottom: 28px; right: 28px; z-index: 100; width: 52px; height: 52px;
+  border-radius: 50%; background: #2b6cb0; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,.22); cursor: pointer; opacity: 0; transition: opacity .25s;
+}
+.back-to-top.visible { opacity: 1; }
+.back-to-top:hover { background: #1a4b8c; }
+
+/* ========== 7) PDF Links Row with Colored Badges ========== */
+.pdf-row {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.25rem 0;
+}
+.pdf {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 600 0.9rem/1.4 "Inter", system-ui, sans-serif; color: #1a1a1a; text-decoration: none;
+  background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0.55rem 0.9rem;
+  transition: all 0.25s ease;
+}
+.pdf:hover { background: #f9fafb; border-color: #cbd5e1; box-shadow: 0 2px 6px rgba(0,0,0,.08); transform: translateY(-2px); }
+.pdf::before { content: "📄"; font-size: 1rem; }
+.pdf .host { font-weight: 500; font-size: 0.75rem; color: #64748b; border-left: 1px solid #e2e8f0; padding-left: 0.6rem; margin-left: 0.4rem; }
+.pdf.agenda  { border-left: 6px solid #ef4444; } /* Red */
+.pdf.minutes { border-left: 6px solid #3b82f6; } /* Blue */
+.pdf.press   { border-left: 6px solid #10b981; } /* Green */
+
+@media (max-width: 480px) {
+  .pdf-row { flex-direction: column; }
+  .pdf { width: 100%; justify-content: center; text-align: center; }
+}
+
+/* ========== 8) Make main article full-bleed (remove card feel) ========== */
+main.container { padding-left: 0 !important; padding-right: 0 !important; max-width: 100% !important; }
+main.container .meeting {
+  max-width: none !important; margin: 0 !important; border: none !important;
+  border-radius: 0 !important; box-shadow: none !important; background: transparent !important; padding: 0 !important;
+}
+main.container .meeting-header,
+main.container .section,
+main.container .meeting-nav { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+@media (max-width: 640px) {
+  main.container .meeting-header,
+  main.container .section,
+  main.container .meeting-nav { padding-left: 1rem !important; padding-right: 1rem !important; }
+}
+
+/* ========== 9) Amrut Blog Typography inside Meeting (article wrappers) ========== */
+.entry-content .meeting,
+.post-content .meeting,
+.elementor-widget-container .meeting {
+  font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', Roboto, Arial, sans-serif !important;
+  font-size: 18px !important;      /* Amrut base */
+  line-height: 1.85 !important;
+  color: #2a2a2a !important;
+}
+.entry-content .meeting :is(p, li, a, span, td, th, blockquote, small, code, pre),
+.post-content .meeting :is(p, li, a, span, td, th, blockquote, small, code, pre),
+.elementor-widget-container .meeting :is(p, li, a, span, td, th, blockquote, small, code, pre) {
+  font-family: inherit !important; font-size: 1em !important; line-height: inherit !important; color: inherit !important;
+}
+
+/* Amrut heading sizes */
+.entry-content .meeting h2,
+.post-content .meeting h2,
+.elementor-widget-container .meeting h2 {
+  font-size: 22px !important; margin: 28px 0 14px !important; font-weight: bold !important; color: #1c1c1c !important;
+}
+.entry-content .meeting h3,
+.post-content .meeting h3,
+.elementor-widget-container .meeting h3 {
+  font-size: 20px !important; margin: 24px 0 12px !important; font-weight: bold !important; color: #1c1c1c !important;
+}
+
+/* Amrut lists spacing */
+.entry-content .meeting :is(ul, ol),
+.post-content .meeting :is(ul, ol),
+.elementor-widget-container .meeting :is(ul, ol) { margin-left: 20px !important; margin-bottom: 20px !important; }
+.entry-content .meeting :is(ul li, ol li),
+.post-content .meeting :is(ul li, ol li),
+.elementor-widget-container .meeting :is(ul li, ol li) { margin-bottom: 10px !important; }
+
+/* Amrut tables */
+.entry-content .meeting table,
+.post-content .meeting table,
+.elementor-widget-container .meeting table {
+  margin: 20px 0 !important; border: 1px solid #ddd !important; width: 100% !important;
+  font-family: Arial, sans-serif !important; font-size: 16px !important; border-collapse: collapse !important;
+}
+.entry-content .meeting table th,
+.entry-content .meeting table td,
+.post-content .meeting table th,
+.post-content .meeting table td,
+.elementor-widget-container .meeting table th,
+.elementor-widget-container .meeting table td {
+  border: 1px solid #ccc !important; padding: 10px !important; text-align: left !important;
+}
+
+/* Amrut blockquote */
+.entry-content .meeting blockquote,
+.post-content .meeting blockquote,
+.elementor-widget-container .meeting blockquote {
+  background-color: #f0f8ff !important; border-left: 4px solid #007acc !important;
+  margin: 20px 0 !important; padding: 14px 20px !important;
+}
+
+/* ========== 10) Responsive minor tweaks ========== */
+@media (max-width: 1024px) { .toc-grid, .meeting-links { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .toc-grid { grid-template-columns: repeat(2, 1fr); } .meeting-links { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .toc-grid { grid-template-columns: 1fr; } .meeting-links { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 360px)  { .meeting-links { grid-template-columns: 1fr; } }
+   
+/* ==== PATCH: Responsive Meeting Archive Grid ==== */
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* desktop: 5 columns */
+  gap: 12px;
+}
+
+.toc-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 6px;
+
+  font-family: 'Segoe UI','Inter',sans-serif;
+  font-size: 0.85rem;  /* smaller text */
+  line-height: 1.3;
+  cursor: pointer;
+
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border 0.2s, color 0.2s;
+}
+
+.toc-item h3 {
+  font-size: 0.9rem;   /* ~14.5px */
+  margin-bottom: 4px;
+  color: #184a8b;
+  white-space: normal;
+  word-break: break-word;
+}
+.toc-item p {
+  font-size: 0.75rem;  /* ~12px */
+  color: #475569;
+  margin: 0;
+  white-space: normal;
+}
+
+/* Hover effect */
+.toc-item:hover {
+  background: #f0f7ff;         /* light blue background */
+  border-color: #93c5fd;       /* softer blue border */
+  transform: translateY(-3px); /* lift */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.toc-item:hover h3 {
+  color: #1e40af;  /* deeper blue */
+}
+.toc-item:hover p {
+  color: #1e3a8a;
+}
+
+/* Mobile view: 3 columns */
+@media (max-width: 768px) {
+  .toc-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .toc-item {
+    font-size: 0.8rem;
+    padding: 8px 4px;
+  }
+  .toc-item h3 {
+    font-size: 0.82rem;
+  }
+  .toc-item p {
+    font-size: 0.7rem;
+  }
+}
+   
+ /* ==== PATCH: Force Meeting Date Style ==== */
+.meeting-date {
+  color: #8b4513 !important;    /* attractive brown */
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  font-style: italic !important;
+}
+
+ 
+/* ==== PATCH: Date & Place colors in Meeting Archive cards ==== */
+.toc-item .toc-date  { color: #8b4513; font-weight: 600; }   /* brown */
+.toc-item .toc-sep   { color: #94a3b8; }                     /* light separator */
+.toc-item .toc-place { color: #1e3a8a; font-style: italic; } /* deep blue */
+.toc-item:hover .toc-place { color: #0f172a; }               /* a bit darker on hover */
+   
+  /* Wrapper so buttons can overlay */
+.meeting-header {
+  position: relative;
+  display: inline-block; /* keeps buttons together */
+}
+
+/* Base button styles */
+.new-window-btn,
+.close-meeting {
+  position: relative;
+  z-index: 1;
+}
+
+/* Place close button overlapping top-right of New Window */
+.close-meeting {
+  position: absolute;
+  top: -10px;   /* adjust overlap */
+  right: -10px; /* adjust overlap */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f87171; /* red */
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Ensure New Window button stays visible under */
+.new-window-btn {
+  padding: 8px 14px;
+  background: #e0f2fe;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .meeting-header {
+    display: block;
+  }
+  .new-window-btn {
+    width: 100%; /* full-width on mobile */
+    text-align: center;
+  }
+  .close-meeting {
+    top: 4px;
+    right: 4px;
+  }
+}
+ 
+/* Related Meetings block */
+.section#related21 {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Heading */
+.section#related21 h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #0b2f6b;
+  border-bottom: 2px solid #93c5fd;
+  padding-bottom: 6px;
+}
+
+/* List styling */
+.section#related21 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section#related21 ul li {
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* SVG icon style */
+.section#related21 ul li svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  fill: #2563eb;
+  margin-top: 2px;
+}
+
+/* Links */
+.section#related21 ul li a {
+  text-decoration: none;
+  color: #1e3a8a;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.section#related21 ul li a:hover {
+  color: #0f766e;
+  text-decoration: underline;
+}
